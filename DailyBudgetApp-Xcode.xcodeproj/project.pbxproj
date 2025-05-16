@@ -1,0 +1,782 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		17575B412DD290B3006701CA /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17575B402DD290B3006701CA /* WidgetKit.framework */; };
+		17575B432DD290B3006701CA /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17575B422DD290B3006701CA /* SwiftUI.framework */; };
+		17575B522DD290B5006701CA /* DailyBudgetWidgetExtensionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 17575B3E2DD290B2006701CA /* DailyBudgetWidgetExtensionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		17575B1E2DD28E0C006701CA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 17575B052DD28E09006701CA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 17575B0C2DD28E09006701CA;
+			remoteInfo = "DailyBudgetApp-Xcode";
+		};
+		17575B282DD28E0C006701CA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 17575B052DD28E09006701CA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 17575B0C2DD28E09006701CA;
+			remoteInfo = "DailyBudgetApp-Xcode";
+		};
+		17575B502DD290B5006701CA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 17575B052DD28E09006701CA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 17575B3D2DD290B2006701CA;
+			remoteInfo = DailyBudgetWidgetExtensionExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		17575B572DD290B5006701CA /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				17575B522DD290B5006701CA /* DailyBudgetWidgetExtensionExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		17575B0D2DD28E09006701CA /* DailyBudgetApp-Xcode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DailyBudgetApp-Xcode.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		17575B1D2DD28E0C006701CA /* DailyBudgetApp-XcodeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DailyBudgetApp-XcodeTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		17575B272DD28E0C006701CA /* DailyBudgetApp-XcodeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DailyBudgetApp-XcodeUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		17575B3E2DD290B2006701CA /* DailyBudgetWidgetExtensionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DailyBudgetWidgetExtensionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		17575B402DD290B3006701CA /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		17575B422DD290B3006701CA /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		17575B532DD290B5006701CA /* Exceptions for "DailyBudgetWidgetExtension" folder in "DailyBudgetWidgetExtensionExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 17575B3D2DD290B2006701CA /* DailyBudgetWidgetExtensionExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		17575B0F2DD28E09006701CA /* DailyBudgetApp-Xcode */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "DailyBudgetApp-Xcode";
+			sourceTree = "<group>";
+		};
+		17575B202DD28E0C006701CA /* DailyBudgetApp-XcodeTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "DailyBudgetApp-XcodeTests";
+			sourceTree = "<group>";
+		};
+		17575B2A2DD28E0C006701CA /* DailyBudgetApp-XcodeUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "DailyBudgetApp-XcodeUITests";
+			sourceTree = "<group>";
+		};
+		17575B442DD290B3006701CA /* DailyBudgetWidgetExtension */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				17575B532DD290B5006701CA /* Exceptions for "DailyBudgetWidgetExtension" folder in "DailyBudgetWidgetExtensionExtension" target */,
+			);
+			path = DailyBudgetWidgetExtension;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		17575B0A2DD28E09006701CA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17575B1A2DD28E0C006701CA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17575B242DD28E0C006701CA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17575B3B2DD290B2006701CA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17575B432DD290B3006701CA /* SwiftUI.framework in Frameworks */,
+				17575B412DD290B3006701CA /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		17575B042DD28E09006701CA = {
+			isa = PBXGroup;
+			children = (
+				17575B0F2DD28E09006701CA /* DailyBudgetApp-Xcode */,
+				17575B202DD28E0C006701CA /* DailyBudgetApp-XcodeTests */,
+				17575B2A2DD28E0C006701CA /* DailyBudgetApp-XcodeUITests */,
+				17575B442DD290B3006701CA /* DailyBudgetWidgetExtension */,
+				17575B3F2DD290B3006701CA /* Frameworks */,
+				17575B0E2DD28E09006701CA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		17575B0E2DD28E09006701CA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				17575B0D2DD28E09006701CA /* DailyBudgetApp-Xcode.app */,
+				17575B1D2DD28E0C006701CA /* DailyBudgetApp-XcodeTests.xctest */,
+				17575B272DD28E0C006701CA /* DailyBudgetApp-XcodeUITests.xctest */,
+				17575B3E2DD290B2006701CA /* DailyBudgetWidgetExtensionExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		17575B3F2DD290B3006701CA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				17575B402DD290B3006701CA /* WidgetKit.framework */,
+				17575B422DD290B3006701CA /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		17575B0C2DD28E09006701CA /* DailyBudgetApp-Xcode */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17575B312DD28E0C006701CA /* Build configuration list for PBXNativeTarget "DailyBudgetApp-Xcode" */;
+			buildPhases = (
+				17575B092DD28E09006701CA /* Sources */,
+				17575B0A2DD28E09006701CA /* Frameworks */,
+				17575B0B2DD28E09006701CA /* Resources */,
+				17575B572DD290B5006701CA /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				17575B512DD290B5006701CA /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				17575B0F2DD28E09006701CA /* DailyBudgetApp-Xcode */,
+			);
+			name = "DailyBudgetApp-Xcode";
+			packageProductDependencies = (
+			);
+			productName = "DailyBudgetApp-Xcode";
+			productReference = 17575B0D2DD28E09006701CA /* DailyBudgetApp-Xcode.app */;
+			productType = "com.apple.product-type.application";
+		};
+		17575B1C2DD28E0C006701CA /* DailyBudgetApp-XcodeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17575B342DD28E0C006701CA /* Build configuration list for PBXNativeTarget "DailyBudgetApp-XcodeTests" */;
+			buildPhases = (
+				17575B192DD28E0C006701CA /* Sources */,
+				17575B1A2DD28E0C006701CA /* Frameworks */,
+				17575B1B2DD28E0C006701CA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				17575B1F2DD28E0C006701CA /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				17575B202DD28E0C006701CA /* DailyBudgetApp-XcodeTests */,
+			);
+			name = "DailyBudgetApp-XcodeTests";
+			packageProductDependencies = (
+			);
+			productName = "DailyBudgetApp-XcodeTests";
+			productReference = 17575B1D2DD28E0C006701CA /* DailyBudgetApp-XcodeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		17575B262DD28E0C006701CA /* DailyBudgetApp-XcodeUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17575B372DD28E0C006701CA /* Build configuration list for PBXNativeTarget "DailyBudgetApp-XcodeUITests" */;
+			buildPhases = (
+				17575B232DD28E0C006701CA /* Sources */,
+				17575B242DD28E0C006701CA /* Frameworks */,
+				17575B252DD28E0C006701CA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				17575B292DD28E0C006701CA /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				17575B2A2DD28E0C006701CA /* DailyBudgetApp-XcodeUITests */,
+			);
+			name = "DailyBudgetApp-XcodeUITests";
+			packageProductDependencies = (
+			);
+			productName = "DailyBudgetApp-XcodeUITests";
+			productReference = 17575B272DD28E0C006701CA /* DailyBudgetApp-XcodeUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		17575B3D2DD290B2006701CA /* DailyBudgetWidgetExtensionExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17575B542DD290B5006701CA /* Build configuration list for PBXNativeTarget "DailyBudgetWidgetExtensionExtension" */;
+			buildPhases = (
+				17575B3A2DD290B2006701CA /* Sources */,
+				17575B3B2DD290B2006701CA /* Frameworks */,
+				17575B3C2DD290B2006701CA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				17575B442DD290B3006701CA /* DailyBudgetWidgetExtension */,
+			);
+			name = DailyBudgetWidgetExtensionExtension;
+			packageProductDependencies = (
+			);
+			productName = DailyBudgetWidgetExtensionExtension;
+			productReference = 17575B3E2DD290B2006701CA /* DailyBudgetWidgetExtensionExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		17575B052DD28E09006701CA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1630;
+				LastUpgradeCheck = 1630;
+				TargetAttributes = {
+					17575B0C2DD28E09006701CA = {
+						CreatedOnToolsVersion = 16.3;
+					};
+					17575B1C2DD28E0C006701CA = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = 17575B0C2DD28E09006701CA;
+					};
+					17575B262DD28E0C006701CA = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = 17575B0C2DD28E09006701CA;
+					};
+					17575B3D2DD290B2006701CA = {
+						CreatedOnToolsVersion = 16.3;
+					};
+				};
+			};
+			buildConfigurationList = 17575B082DD28E09006701CA /* Build configuration list for PBXProject "DailyBudgetApp-Xcode" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 17575B042DD28E09006701CA;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 17575B0E2DD28E09006701CA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				17575B0C2DD28E09006701CA /* DailyBudgetApp-Xcode */,
+				17575B1C2DD28E0C006701CA /* DailyBudgetApp-XcodeTests */,
+				17575B262DD28E0C006701CA /* DailyBudgetApp-XcodeUITests */,
+				17575B3D2DD290B2006701CA /* DailyBudgetWidgetExtensionExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		17575B0B2DD28E09006701CA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17575B1B2DD28E0C006701CA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17575B252DD28E0C006701CA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17575B3C2DD290B2006701CA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		17575B092DD28E09006701CA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17575B192DD28E0C006701CA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17575B232DD28E0C006701CA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17575B3A2DD290B2006701CA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		17575B1F2DD28E0C006701CA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 17575B0C2DD28E09006701CA /* DailyBudgetApp-Xcode */;
+			targetProxy = 17575B1E2DD28E0C006701CA /* PBXContainerItemProxy */;
+		};
+		17575B292DD28E0C006701CA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 17575B0C2DD28E09006701CA /* DailyBudgetApp-Xcode */;
+			targetProxy = 17575B282DD28E0C006701CA /* PBXContainerItemProxy */;
+		};
+		17575B512DD290B5006701CA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 17575B3D2DD290B2006701CA /* DailyBudgetWidgetExtensionExtension */;
+			targetProxy = 17575B502DD290B5006701CA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		17575B2F2DD28E0C006701CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 4QJP2GMT9G;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		17575B302DD28E0C006701CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 4QJP2GMT9G;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		17575B322DD28E0C006701CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "DailyBudgetApp-Xcode/DailyBudgetApp_Xcode.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4QJP2GMT9G;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Philipp.DailyBudgetApp-Xcode";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 2.4;
+			};
+			name = Debug;
+		};
+		17575B332DD28E0C006701CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "DailyBudgetApp-Xcode/DailyBudgetApp_Xcode.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4QJP2GMT9G;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Philipp.DailyBudgetApp-Xcode";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 2.4;
+			};
+			name = Release;
+		};
+		17575B352DD28E0C006701CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4QJP2GMT9G;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				MACOSX_DEPLOYMENT_TARGET = 15.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Philipp.DailyBudgetApp-XcodeTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DailyBudgetApp-Xcode.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DailyBudgetApp-Xcode";
+				XROS_DEPLOYMENT_TARGET = 2.4;
+			};
+			name = Debug;
+		};
+		17575B362DD28E0C006701CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4QJP2GMT9G;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				MACOSX_DEPLOYMENT_TARGET = 15.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Philipp.DailyBudgetApp-XcodeTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DailyBudgetApp-Xcode.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DailyBudgetApp-Xcode";
+				XROS_DEPLOYMENT_TARGET = 2.4;
+			};
+			name = Release;
+		};
+		17575B382DD28E0C006701CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4QJP2GMT9G;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				MACOSX_DEPLOYMENT_TARGET = 15.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Philipp.DailyBudgetApp-XcodeUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_TARGET_NAME = "DailyBudgetApp-Xcode";
+				XROS_DEPLOYMENT_TARGET = 2.4;
+			};
+			name = Debug;
+		};
+		17575B392DD28E0C006701CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4QJP2GMT9G;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				MACOSX_DEPLOYMENT_TARGET = 15.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Philipp.DailyBudgetApp-XcodeUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_TARGET_NAME = "DailyBudgetApp-Xcode";
+				XROS_DEPLOYMENT_TARGET = 2.4;
+			};
+			name = Release;
+		};
+		17575B552DD290B5006701CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4QJP2GMT9G;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DailyBudgetWidgetExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DailyBudgetWidgetExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Philipp.DailyBudgetApp-Xcode.DailyBudgetWidgetExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		17575B562DD290B5006701CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4QJP2GMT9G;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DailyBudgetWidgetExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DailyBudgetWidgetExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Philipp.DailyBudgetApp-Xcode.DailyBudgetWidgetExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		17575B082DD28E09006701CA /* Build configuration list for PBXProject "DailyBudgetApp-Xcode" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17575B2F2DD28E0C006701CA /* Debug */,
+				17575B302DD28E0C006701CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		17575B312DD28E0C006701CA /* Build configuration list for PBXNativeTarget "DailyBudgetApp-Xcode" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17575B322DD28E0C006701CA /* Debug */,
+				17575B332DD28E0C006701CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		17575B342DD28E0C006701CA /* Build configuration list for PBXNativeTarget "DailyBudgetApp-XcodeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17575B352DD28E0C006701CA /* Debug */,
+				17575B362DD28E0C006701CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		17575B372DD28E0C006701CA /* Build configuration list for PBXNativeTarget "DailyBudgetApp-XcodeUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17575B382DD28E0C006701CA /* Debug */,
+				17575B392DD28E0C006701CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		17575B542DD290B5006701CA /* Build configuration list for PBXNativeTarget "DailyBudgetWidgetExtensionExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17575B552DD290B5006701CA /* Debug */,
+				17575B562DD290B5006701CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 17575B052DD28E09006701CA /* Project object */;
+}
