@@ -15,6 +15,7 @@ struct ContentView: View {
     @State private var transactionAmount = ""
     @State private var transactionDescription = ""
     @State private var isDeposit = true  // true für Einzahlung, false für Auszahlung
+    @Environment(\.colorScheme) private var colorScheme  // Für Zugriff auf das System-Farbschema
     // Gemeinsame UserDefaults für App und Widget
     private let userDefaults = UserDefaults(suiteName: "group.com.dailybudget.app") ?? UserDefaults.standard
     
@@ -38,6 +39,8 @@ struct ContentView: View {
         let dailyBudget = remainingDays > 0 ? remainingBudget / Double(remainingDays) : 0
         // Speichere das berechnete Tagesbudget in UserDefaults
         userDefaults.set(dailyBudget, forKey: "dailyBudget")
+        // Speichere den Farbstatus in UserDefaults für das Widget
+        userDefaults.set(getColorStatusForBudget(dailyBudget), forKey: "budgetColorStatus")
         // Aktualisiere das Widget
         WidgetCenter.shared.reloadAllTimelines()
         return dailyBudget
@@ -50,109 +53,180 @@ struct ContentView: View {
         _ = calculateDailyBudget()
     }
     
+    // Formatiere das Datum auf Deutsch
+    private func formatDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd. MMMM yyyy"
+        formatter.locale = Locale(identifier: "de_DE")
+        return formatter.string(from: date)
+    }
+    
+    // Bestimme die Farbe basierend auf dem Tagesbudget
+    private func getColorForBudget(_ budget: Double) -> Color {
+        if budget < 0 {
+            return .red
+        } else if budget < 10 {
+            return .yellow
+        } else {
+            return .green
+        }
+    }
+    
+    // Speichere den Farbstatus als Int für das Widget
+    private func getColorStatusForBudget(_ budget: Double) -> Int {
+        if budget < 0 {
+            return 0 // Rot
+        } else if budget < 10 {
+            return 1 // Gelb
+        } else {
+            return 2 // Grün
+        }
+    }
+    
     var body: some View {
         NavigationView {
-            VStack {
-                // Daily Budget Display
-                HStack {
-                    Text("Tagesbudget:")
-                    Text(userDefaults.double(forKey: "dailyBudget"), format: .currency(code: "EUR"))
-                        .font(.headline)
-                }
-                .padding()
+            ZStack {
+                // Hintergrundfarbe für die gesamte App
+                (colorScheme == .dark ? Color.black : Color.white)
+                    .edgesIgnoringSafeArea(.all)
                 
-                // Remaining Days Display
-                HStack {
-                    Text("Verbleibende Tage:")
-                    Text("\(userDefaults.integer(forKey: "remainingDays"))")
-                        .font(.headline)
-                }
-                .padding()
-                
-                // Remaining Budget Input
-                HStack {
-                    Text("Verbleibendes Budget:")
-                    TextField("Betrag", value: Binding(
-                        get: { userDefaults.double(forKey: "remainingBudget") },
-                        set: { 
-                            userDefaults.set($0, forKey: "remainingBudget")
-                            // Berechne und aktualisiere das Tagesbudget bei Änderung des verbleibenden Budgets
-                            _ = calculateDailyBudget()
+                VStack(spacing: 0) {
+                    // Oberer Bereich mit dynamischer Hintergrundfarbe
+                    VStack {
+                        // Hauptanzeige für Tagesbudget
+                        VStack(spacing: 0) {
+                            Text(userDefaults.double(forKey: "dailyBudget"), format: .currency(code: "EUR"))
+                                .font(.system(size: 48, weight: .bold))
+                                .padding(.top, 30)
+                                .foregroundColor(.white)
+                            
+                            Text("Tagesbudget")
+                                .font(.system(size: 24))
+                                .padding(.bottom, 20)
+                                .foregroundColor(.white)
                         }
-                    ), format: .currency(code: "EUR"))
-                    .keyboardType(.decimalPad)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                }
-                .padding()
-                
-                // Remaining Budget Display
-                VStack {
-                    Text("Verbleibendes Budget")
-                        .font(.headline)
-                    Text(userDefaults.double(forKey: "remainingBudget"), format: .currency(code: "EUR"))
-                        .font(.title)
-                        .foregroundColor(userDefaults.double(forKey: "remainingBudget") >= 0 ? .green : .red)
-                }
-                .padding()
-                
-                // Expenses List
-                List {
-                    ForEach(budgetModel.expenses) { expense in
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text(expense.description)
-                                    .font(.headline)
-                                Text(expense.date, style: .date)
-                                    .font(.caption)
+                        
+                        // Untere Informationszeile
+                        HStack(spacing: 0) {
+                            // Verbleibende Tage
+                            VStack {
+                                Text("\(userDefaults.integer(forKey: "remainingDays"))")
+                                    .font(.system(size: 32, weight: .bold))
+                                    .foregroundColor(.white)
+                                
+                                Text("verbleibende Tage")
+                                    .font(.system(size: 14))
+                                    .foregroundColor(.white)
                             }
-                            Spacer()
-                            Text(expense.amount, format: .currency(code: "EUR"))
-                                .foregroundColor(.red)
+                            .frame(maxWidth: .infinity)
+                            
+                            // Verbleibendes Budget
+                            VStack {
+                                Text(userDefaults.double(forKey: "remainingBudget"), format: .currency(code: "EUR"))
+                                    .font(.system(size: 32, weight: .bold))
+                                    .foregroundColor(.white)
+                                
+                                Text("verbleibendes Budget")
+                                    .font(.system(size: 14))
+                                    .foregroundColor(.white)
+                            }
+                            .frame(maxWidth: .infinity)
                         }
+                        .padding(.horizontal)
+                        .padding(.bottom, 30)
                     }
-                }
-                
-                Spacer()
-                
-                // Buttons für Ein- und Auszahlungen
-                HStack(spacing: 20) {
-                    Button(action: {
-                        isDeposit = true
-                        showingAddTransaction = true
-                    }) {
-                        VStack {
-                            Image(systemName: "plus.circle.fill")
-                                .font(.system(size: 32))
-                                .foregroundColor(.black)
-                            Text("Einzahlung")
-                                .foregroundColor(.black)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.green.opacity(0.2))
-                        .cornerRadius(10)
-                    }
+                    .background(getColorForBudget(userDefaults.double(forKey: "dailyBudget")))
                     
-                    Button(action: {
-                        isDeposit = false
-                        showingAddTransaction = true
-                    }) {
-                        VStack {
-                            Image(systemName: "minus.circle.fill")
-                                .font(.system(size: 32))
-                                .foregroundColor(.black)
-                            Text("Auszahlung")
-                                .foregroundColor(.black)
+                    Divider()
+                        .frame(height: 1)
+                        .background(Color.gray)
+                    
+                    // Expenses List
+                    List {
+                        ForEach(budgetModel.expenses) { expense in
+                            HStack {
+                                // Datum
+                                Text(formatDate(expense.date))
+                                    .font(.headline)
+                                
+                                // Beschreibung
+                                Spacer()
+                                Text(expense.description)
+                                    .font(.body)
+                                Spacer()
+                                
+                                // Betrag
+                                Text(expense.amount, format: .currency(code: "EUR"))
+                                    .foregroundColor(.red)
+                            }
+                            .listRowBackground(colorScheme == .dark ? Color.black.opacity(0.8) : Color.white)
                         }
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.red.opacity(0.2))
-                        .cornerRadius(10)
+                        
+                        // Einzahlungen anzeigen
+                        ForEach(budgetModel.deposits) { deposit in
+                            HStack {
+                                // Datum
+                                Text(formatDate(deposit.date))
+                                    .font(.headline)
+                                
+                                // Beschreibung
+                                Spacer()
+                                Text(deposit.description)
+                                    .font(.body)
+                                Spacer()
+                                
+                                // Betrag
+                                Text(deposit.amount, format: .currency(code: "EUR"))
+                                    .foregroundColor(.green)
+                            }
+                            .listRowBackground(colorScheme == .dark ? Color.black.opacity(0.8) : Color.white)
+                        }
                     }
+                    .listStyle(PlainListStyle())
+                    
+                    Spacer()
+                    
+                    // Buttons für Ein- und Auszahlungen
+                    HStack(spacing: 20) {
+                        Button(action: {
+                            isDeposit = true
+                            showingAddTransaction = true
+                        }) {
+                            VStack {
+                                Image(systemName: "plus.circle.fill")
+                                    .font(.system(size: 32))
+                                    .foregroundColor(.black)
+                                Text("Einzahlung")
+                                    .foregroundColor(.black)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.green.opacity(0.8))
+                            .cornerRadius(10)
+                        }
+                        
+                        Button(action: {
+                            isDeposit = false
+                            showingAddTransaction = true
+                        }) {
+                            VStack {
+                                Image(systemName: "minus.circle.fill")
+                                    .font(.system(size: 32))
+                                    .foregroundColor(.black)
+                                Text("Auszahlung")
+                                    .foregroundColor(.black)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.red.opacity(0.8))
+                            .cornerRadius(10)
+                        }
+                    }
+                    .padding()
                 }
-                .padding()
             }
             .navigationTitle("Tagesbudget")
+            .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 // Berechne die verbleibenden Tage beim Start der App
                 _ = getRemainingDaysInMonth()
@@ -174,7 +248,9 @@ struct ContentView: View {
                         trailing: Button("Hinzufügen") {
                             if let amount = Double(transactionAmount) {
                                 updateRemainingBudget(amount: amount)
-                                if !isDeposit {
+                                if isDeposit {
+                                    budgetModel.addDeposit(amount: amount, description: transactionDescription)
+                                } else {
                                     budgetModel.addExpense(amount: amount, description: transactionDescription)
                                 }
                                 transactionAmount = ""

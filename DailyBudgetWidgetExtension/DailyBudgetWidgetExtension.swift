@@ -13,7 +13,7 @@ struct Provider: TimelineProvider {
     let userDefaults = UserDefaults(suiteName: "group.com.dailybudget.app") ?? UserDefaults.standard
     
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), dailyBudget: 0.0, remainingDays: 0)
+        SimpleEntry(date: Date(), dailyBudget: 0.0, remainingDays: 0, colorStatus: 1)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
@@ -42,7 +42,8 @@ struct Provider: TimelineProvider {
     private func loadEntry(date: Date = Date()) -> SimpleEntry {
         let dailyBudget = userDefaults.double(forKey: "dailyBudget")
         let remainingDays = userDefaults.integer(forKey: "remainingDays")
-        return SimpleEntry(date: date, dailyBudget: dailyBudget, remainingDays: remainingDays)
+        let colorStatus = userDefaults.integer(forKey: "budgetColorStatus")
+        return SimpleEntry(date: date, dailyBudget: dailyBudget, remainingDays: remainingDays, colorStatus: colorStatus)
     }
     
     // Diese Funktion wird nicht mehr benötigt, da wir die verbleibenden Tage aus UserDefaults lesen
@@ -61,27 +62,63 @@ struct SimpleEntry: TimelineEntry {
     let date: Date
     let dailyBudget: Double
     let remainingDays: Int
+    let colorStatus: Int
 }
 
 struct DailyBudgetWidgetExtensionEntryView : View {
     var entry: Provider.Entry
+    
+    // Konvertiere den colorStatus in eine Color
+    private func getColorForStatus(_ status: Int) -> Color {
+        switch status {
+        case 0:
+            return .red
+        case 1:
+            return .yellow
+        case 2:
+            return .green
+        default:
+            return .yellow
+        }
+    }
 
     var body: some View {
         VStack(spacing: 8) {
             Text(String(format: "%.2f €", entry.dailyBudget))
                 .font(.system(size: 24, weight: .bold))
-                .foregroundColor(.primary)
+                .foregroundColor(.white)
             
             Text("Tagesbudget")
                 .font(.system(size: 14, weight: .medium))
-                .foregroundColor(.secondary)
+                .foregroundColor(.white)
             
-            Text("\(entry.remainingDays) Tage übrig")
-                .font(.system(size: 12))
-                .foregroundColor(.secondary)
+            HStack {
+                VStack {
+                    Text("\(entry.remainingDays)")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.white)
+                    
+                    Text("verbleibende Tage")
+                        .font(.system(size: 10))
+                        .foregroundColor(.white)
+                }
+                .frame(maxWidth: .infinity)
+                
+                VStack {
+                    // Hier könnte das verbleibende Budget angezeigt werden, wenn gewünscht
+                    Text("...")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.clear) // Unsichtbar, nur als Platzhalter
+                    
+                    Text("verbleibendes Budget")
+                        .font(.system(size: 10))
+                        .foregroundColor(.white)
+                }
+                .frame(maxWidth: .infinity)
+            }
         }
         .padding()
-        .containerBackground(.fill.tertiary, for: .widget)
+        .containerBackground(getColorForStatus(entry.colorStatus), for: .widget)
     }
 }
 
@@ -101,6 +138,6 @@ struct DailyBudgetWidgetExtension: Widget {
 #Preview(as: .systemSmall) {
     DailyBudgetWidgetExtension()
 } timeline: {
-    SimpleEntry(date: .now, dailyBudget: 0.0, remainingDays: 0)
-    SimpleEntry(date: .now, dailyBudget: 0.0, remainingDays: 0)
+    SimpleEntry(date: .now, dailyBudget: 0.0, remainingDays: 0, colorStatus: 1)
+    SimpleEntry(date: .now, dailyBudget: 15.0, remainingDays: 0, colorStatus: 2)
 }
