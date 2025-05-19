@@ -23,7 +23,12 @@ struct ContentView: View {
         let range = calendar.range(of: .day, in: .month, for: today)!
         let totalDays = range.count
         let currentDay = calendar.component(.day, from: today)
-        return totalDays - currentDay + 1
+        let remainingDays = totalDays - currentDay + 1
+        
+        // Speichere die verbleibenden Tage in UserDefaults
+        userDefaults.set(remainingDays, forKey: "remainingDays")
+        
+        return remainingDays
     }
     
     private func calculateDailyBudget() -> Double {
@@ -44,6 +49,14 @@ struct ContentView: View {
                 HStack {
                     Text("Tagesbudget:")
                     Text(userDefaults.double(forKey: "dailyBudget"), format: .currency(code: "EUR"))
+                        .font(.headline)
+                }
+                .padding()
+                
+                // Remaining Days Display
+                HStack {
+                    Text("Verbleibende Tage:")
+                    Text("\(userDefaults.integer(forKey: "remainingDays"))")
                         .font(.headline)
                 }
                 .padding()
@@ -100,6 +113,8 @@ struct ContentView: View {
                 }
             }
             .onAppear {
+                // Berechne die verbleibenden Tage beim Start der App
+                _ = getRemainingDaysInMonth()
                 // Berechne das Tagesbudget beim Start der App
                 _ = calculateDailyBudget()
             }

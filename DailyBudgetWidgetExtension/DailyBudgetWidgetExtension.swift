@@ -41,10 +41,12 @@ struct Provider: TimelineProvider {
     
     private func loadEntry(date: Date = Date()) -> SimpleEntry {
         let dailyBudget = userDefaults.double(forKey: "dailyBudget")
-        let remainingDays = calculateRemainingDays()
+        let remainingDays = userDefaults.integer(forKey: "remainingDays")
         return SimpleEntry(date: date, dailyBudget: dailyBudget, remainingDays: remainingDays)
     }
     
+    // Diese Funktion wird nicht mehr benötigt, da wir die verbleibenden Tage aus UserDefaults lesen
+    // Wir behalten sie als Fallback, falls keine Daten in UserDefaults vorhanden sind
     private func calculateRemainingDays() -> Int {
         let calendar = Calendar.current
         let today = Date()
