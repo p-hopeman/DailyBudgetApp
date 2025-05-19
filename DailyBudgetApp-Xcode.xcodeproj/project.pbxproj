@@ -57,6 +57,7 @@
 		17575B3E2DD290B2006701CA /* DailyBudgetWidgetExtensionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DailyBudgetWidgetExtensionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		17575B402DD290B3006701CA /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		17575B422DD290B3006701CA /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		17E754972DDB780B00480C62 /* DailyBudgetWidgetExtensionExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DailyBudgetWidgetExtensionExtension.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -73,16 +74,6 @@
 		17575B0F2DD28E09006701CA /* DailyBudgetApp-Xcode */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "DailyBudgetApp-Xcode";
-			sourceTree = "<group>";
-		};
-		17575B202DD28E0C006701CA /* DailyBudgetApp-XcodeTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "DailyBudgetApp-XcodeTests";
-			sourceTree = "<group>";
-		};
-		17575B2A2DD28E0C006701CA /* DailyBudgetApp-XcodeUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "DailyBudgetApp-XcodeUITests";
 			sourceTree = "<group>";
 		};
 		17575B442DD290B3006701CA /* DailyBudgetWidgetExtension */ = {
@@ -132,9 +123,8 @@
 		17575B042DD28E09006701CA = {
 			isa = PBXGroup;
 			children = (
+				17E754972DDB780B00480C62 /* DailyBudgetWidgetExtensionExtension.entitlements */,
 				17575B0F2DD28E09006701CA /* DailyBudgetApp-Xcode */,
-				17575B202DD28E0C006701CA /* DailyBudgetApp-XcodeTests */,
-				17575B2A2DD28E0C006701CA /* DailyBudgetApp-XcodeUITests */,
 				17575B442DD290B3006701CA /* DailyBudgetWidgetExtension */,
 				17575B3F2DD290B3006701CA /* Frameworks */,
 				17575B0E2DD28E09006701CA /* Products */,
@@ -201,9 +191,6 @@
 			dependencies = (
 				17575B1F2DD28E0C006701CA /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				17575B202DD28E0C006701CA /* DailyBudgetApp-XcodeTests */,
-			);
 			name = "DailyBudgetApp-XcodeTests";
 			packageProductDependencies = (
 			);
@@ -223,9 +210,6 @@
 			);
 			dependencies = (
 				17575B292DD28E0C006701CA /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				17575B2A2DD28E0C006701CA /* DailyBudgetApp-XcodeUITests */,
 			);
 			name = "DailyBudgetApp-XcodeUITests";
 			packageProductDependencies = (
@@ -674,6 +658,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = DailyBudgetWidgetExtensionExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4QJP2GMT9G;
@@ -703,6 +688,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = DailyBudgetWidgetExtensionExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4QJP2GMT9G;

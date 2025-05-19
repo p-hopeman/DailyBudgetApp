@@ -9,35 +9,49 @@ import WidgetKit
 import SwiftUI
 
 struct Provider: TimelineProvider {
+    // Gemeinsame UserDefaults für App und Widget
+    let userDefaults = UserDefaults(suiteName: "group.com.dailybudget.app") ?? UserDefaults.standard
+    
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(date: Date(), dailyBudget: 0.0, remainingDays: 0)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let (dailyBudget, remainingDays) = calculateDailyBudget()
-        let entry = SimpleEntry(date: Date(), dailyBudget: dailyBudget, remainingDays: remainingDays)
+        let entry = loadEntry()
         completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        let (dailyBudget, remainingDays) = calculateDailyBudget()
-        let entry = SimpleEntry(date: Date(), dailyBudget: dailyBudget, remainingDays: remainingDays)
-        let timeline = Timeline(entries: [entry], policy: .atEnd)
+        let entry = loadEntry()
+        
+        // Aktualisiere das Widget alle 15 Minuten
+        var currentDate = Date()
+        var entries: [SimpleEntry] = [entry]
+        
+        // Erstelle mehrere Einträge für regelmäßige Aktualisierungen
+        for _ in 0..<24 {
+            currentDate = Calendar.current.date(byAdding: .minute, value: 15, to: currentDate)!
+            let entry = loadEntry(date: currentDate)
+            entries.append(entry)
+        }
+        
+        let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
     }
     
-    private func calculateDailyBudget() -> (Double, Int) {
-        let balance = UserDefaults.standard.double(forKey: "balance")
+    private func loadEntry(date: Date = Date()) -> SimpleEntry {
+        let dailyBudget = userDefaults.double(forKey: "dailyBudget")
+        let remainingDays = calculateRemainingDays()
+        return SimpleEntry(date: date, dailyBudget: dailyBudget, remainingDays: remainingDays)
+    }
+    
+    private func calculateRemainingDays() -> Int {
         let calendar = Calendar.current
         let today = Date()
-        
         let range = calendar.range(of: .day, in: .month, for: today)!
         let daysInMonth = range.count
         let currentDay = calendar.component(.day, from: today)
-        let remainingDays = daysInMonth - currentDay + 1
-        
-        let dailyBudget = balance / Double(remainingDays)
-        return ((dailyBudget * 100).rounded() / 100, remainingDays)
+        return daysInMonth - currentDay + 1
     }
 }
 
