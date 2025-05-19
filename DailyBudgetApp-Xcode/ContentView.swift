@@ -11,9 +11,10 @@ import WidgetKit
 
 struct ContentView: View {
     @StateObject private var budgetModel = BudgetModel()
-    @State private var showingAddExpense = false
-    @State private var newExpenseAmount = ""
-    @State private var newExpenseDescription = ""
+    @State private var showingAddTransaction = false
+    @State private var transactionAmount = ""
+    @State private var transactionDescription = ""
+    @State private var isDeposit = true  // true für Einzahlung, false für Auszahlung
     // Gemeinsame UserDefaults für App und Widget
     private let userDefaults = UserDefaults(suiteName: "group.com.dailybudget.app") ?? UserDefaults.standard
     
@@ -40,6 +41,13 @@ struct ContentView: View {
         // Aktualisiere das Widget
         WidgetCenter.shared.reloadAllTimelines()
         return dailyBudget
+    }
+    
+    private func updateRemainingBudget(amount: Double) {
+        let currentBudget = userDefaults.double(forKey: "remainingBudget")
+        let newBudget = isDeposit ? currentBudget + amount : currentBudget - amount
+        userDefaults.set(newBudget, forKey: "remainingBudget")
+        _ = calculateDailyBudget()
     }
     
     var body: some View {
@@ -103,39 +111,75 @@ struct ContentView: View {
                         }
                     }
                 }
-            }
-            .navigationTitle("Tagesbudget")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: { showingAddExpense = true }) {
-                        Image(systemName: "plus")
+                
+                Spacer()
+                
+                // Buttons für Ein- und Auszahlungen
+                HStack(spacing: 20) {
+                    Button(action: {
+                        isDeposit = true
+                        showingAddTransaction = true
+                    }) {
+                        VStack {
+                            Image(systemName: "plus.circle.fill")
+                                .font(.system(size: 32))
+                                .foregroundColor(.black)
+                            Text("Einzahlung")
+                                .foregroundColor(.black)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.green.opacity(0.2))
+                        .cornerRadius(10)
+                    }
+                    
+                    Button(action: {
+                        isDeposit = false
+                        showingAddTransaction = true
+                    }) {
+                        VStack {
+                            Image(systemName: "minus.circle.fill")
+                                .font(.system(size: 32))
+                                .foregroundColor(.black)
+                            Text("Auszahlung")
+                                .foregroundColor(.black)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.red.opacity(0.2))
+                        .cornerRadius(10)
                     }
                 }
+                .padding()
             }
+            .navigationTitle("Tagesbudget")
             .onAppear {
                 // Berechne die verbleibenden Tage beim Start der App
                 _ = getRemainingDaysInMonth()
                 // Berechne das Tagesbudget beim Start der App
                 _ = calculateDailyBudget()
             }
-            .sheet(isPresented: $showingAddExpense) {
+            .sheet(isPresented: $showingAddTransaction) {
                 NavigationView {
                     Form {
-                        TextField("Betrag", text: $newExpenseAmount)
+                        TextField("Betrag", text: $transactionAmount)
                             .keyboardType(.decimalPad)
-                        TextField("Beschreibung", text: $newExpenseDescription)
+                        TextField("Beschreibung", text: $transactionDescription)
                     }
-                    .navigationTitle("Neue Ausgabe")
+                    .navigationTitle(isDeposit ? "Neue Einzahlung" : "Neue Auszahlung")
                     .navigationBarItems(
                         leading: Button("Abbrechen") {
-                            showingAddExpense = false
+                            showingAddTransaction = false
                         },
                         trailing: Button("Hinzufügen") {
-                            if let amount = Double(newExpenseAmount) {
-                                budgetModel.addExpense(amount: amount, description: newExpenseDescription)
-                                newExpenseAmount = ""
-                                newExpenseDescription = ""
-                                showingAddExpense = false
+                            if let amount = Double(transactionAmount) {
+                                updateRemainingBudget(amount: amount)
+                                if !isDeposit {
+                                    budgetModel.addExpense(amount: amount, description: transactionDescription)
+                                }
+                                transactionAmount = ""
+                                transactionDescription = ""
+                                showingAddTransaction = false
                             }
                         }
                     )
