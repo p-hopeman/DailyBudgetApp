@@ -7,5 +7,12 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.widgetkit-extension</string>
 	</dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Fonts/Satoshi-Regular.otf</string>
+		<string>Fonts/Satoshi-Medium.otf</string>
+		<string>Fonts/Satoshi-Bold.otf</string>
+		<string>Fonts/Satoshi-Light.otf</string>
+	</array>
 </dict>
 </plist>

@@ -6,9 +6,15 @@
 //
 
 import SwiftUI
+import CoreText
 
 @main
 struct DailyBudgetApp_XcodeApp: App {
+    init() {
+        // Registriere benutzerdefinierte Schriftarten
+        FontRegistration.registerFonts()
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()

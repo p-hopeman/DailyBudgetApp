@@ -7,6 +7,16 @@
 
 import WidgetKit
 import SwiftUI
+import CoreText
+#if canImport(UIKit)
+import UIKit
+#endif
+
+// Registriere Schriftarten beim Laden des Moduls
+private let fontRegistrationDone: Bool = {
+    FontRegistration.registerFonts()
+    return true
+}()
 
 struct Provider: TimelineProvider {
     // Gemeinsame UserDefaults für App und Widget
@@ -85,37 +95,12 @@ struct DailyBudgetWidgetExtensionEntryView : View {
     var body: some View {
         VStack(spacing: 8) {
             Text(String(format: "%.2f €", entry.dailyBudget))
-                .font(.system(size: 24, weight: .bold))
+                .font(.satoshi(size: 28, weight: .bold))
                 .foregroundColor(.white)
             
             Text("Tagesbudget")
-                .font(.system(size: 14, weight: .medium))
+                .font(.satoshi(size: 14, weight: .light))
                 .foregroundColor(.white)
-            
-            HStack {
-                VStack {
-                    Text("\(entry.remainingDays)")
-                        .font(.system(size: 16, weight: .bold))
-                        .foregroundColor(.white)
-                    
-                    Text("verbleibende Tage")
-                        .font(.system(size: 10))
-                        .foregroundColor(.white)
-                }
-                .frame(maxWidth: .infinity)
-                
-                VStack {
-                    // Hier könnte das verbleibende Budget angezeigt werden, wenn gewünscht
-                    Text("...")
-                        .font(.system(size: 16, weight: .bold))
-                        .foregroundColor(.clear) // Unsichtbar, nur als Platzhalter
-                    
-                    Text("verbleibendes Budget")
-                        .font(.system(size: 10))
-                        .foregroundColor(.white)
-                }
-                .frame(maxWidth: .infinity)
-            }
         }
         .padding()
         .containerBackground(getColorForStatus(entry.colorStatus), for: .widget)
@@ -130,7 +115,7 @@ struct DailyBudgetWidgetExtension: Widget {
             DailyBudgetWidgetExtensionEntryView(entry: entry)
         }
         .configurationDisplayName("Tagesbudget")
-        .description("Zeigt Ihr tägliches Budget und die verbleibenden Tage an.")
+        .description("Zeigt Ihr tägliches Budget an.")
         .supportedFamilies([.systemSmall])
     }
 }

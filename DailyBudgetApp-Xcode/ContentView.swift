@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftData
 import WidgetKit
+import UIKit
 
 struct ContentView: View {
     @StateObject private var budgetModel = BudgetModel()
@@ -83,6 +84,22 @@ struct ContentView: View {
         }
     }
     
+    // Hilfsfunktion zum Testen der Schriftarten
+    private func testFontAvailability() -> [String] {
+        let fontNames = ["Satoshi-Regular", "Satoshi-Medium", "Satoshi-Bold", "Satoshi-Light"]
+        var results: [String] = []
+        
+        for fontName in fontNames {
+            if UIFont(name: fontName, size: 12) != nil {
+                results.append("✅ \(fontName) ist verfügbar")
+            } else {
+                results.append("❌ \(fontName) ist NICHT verfügbar")
+            }
+        }
+        
+        return results
+    }
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -96,12 +113,12 @@ struct ContentView: View {
                         // Hauptanzeige für Tagesbudget
                         VStack(spacing: 0) {
                             Text(userDefaults.double(forKey: "dailyBudget"), format: .currency(code: "EUR"))
-                                .font(.system(size: 48, weight: .bold))
+                                .font(.satoshi(size: 52, weight: .bold))
                                 .padding(.top, 30)
                                 .foregroundColor(.white)
                             
                             Text("Tagesbudget")
-                                .font(.system(size: 24))
+                                .font(.satoshi(size: 24, weight: .light))
                                 .padding(.bottom, 20)
                                 .foregroundColor(.white)
                         }
@@ -111,11 +128,11 @@ struct ContentView: View {
                             // Verbleibende Tage
                             VStack {
                                 Text("\(userDefaults.integer(forKey: "remainingDays"))")
-                                    .font(.system(size: 32, weight: .bold))
+                                    .font(.satoshi(size: 36, weight: .bold))
                                     .foregroundColor(.white)
                                 
                                 Text("verbleibende Tage")
-                                    .font(.system(size: 14))
+                                    .font(.satoshi(size: 14, weight: .light))
                                     .foregroundColor(.white)
                             }
                             .frame(maxWidth: .infinity)
@@ -123,11 +140,11 @@ struct ContentView: View {
                             // Verbleibendes Budget
                             VStack {
                                 Text(userDefaults.double(forKey: "remainingBudget"), format: .currency(code: "EUR"))
-                                    .font(.system(size: 32, weight: .bold))
+                                    .font(.satoshi(size: 36, weight: .bold))
                                     .foregroundColor(.white)
                                 
                                 Text("verbleibendes Budget")
-                                    .font(.system(size: 14))
+                                    .font(.satoshi(size: 14, weight: .light))
                                     .foregroundColor(.white)
                             }
                             .frame(maxWidth: .infinity)
@@ -147,16 +164,17 @@ struct ContentView: View {
                             HStack {
                                 // Datum
                                 Text(formatDate(expense.date))
-                                    .font(.headline)
+                                    .font(.satoshi(size: 16, weight: .light))
                                 
                                 // Beschreibung
                                 Spacer()
                                 Text(expense.description)
-                                    .font(.body)
+                                    .font(.satoshi(size: 16, weight: .light))
                                 Spacer()
                                 
                                 // Betrag
                                 Text(expense.amount, format: .currency(code: "EUR"))
+                                    .font(.satoshi(size: 16, weight: .bold))
                                     .foregroundColor(.red)
                             }
                             .listRowBackground(colorScheme == .dark ? Color.black.opacity(0.8) : Color.white)
@@ -167,16 +185,17 @@ struct ContentView: View {
                             HStack {
                                 // Datum
                                 Text(formatDate(deposit.date))
-                                    .font(.headline)
+                                    .font(.satoshi(size: 16, weight: .light))
                                 
                                 // Beschreibung
                                 Spacer()
                                 Text(deposit.description)
-                                    .font(.body)
+                                    .font(.satoshi(size: 16, weight: .light))
                                 Spacer()
                                 
                                 // Betrag
                                 Text(deposit.amount, format: .currency(code: "EUR"))
+                                    .font(.satoshi(size: 16, weight: .bold))
                                     .foregroundColor(.green)
                             }
                             .listRowBackground(colorScheme == .dark ? Color.black.opacity(0.8) : Color.white)
