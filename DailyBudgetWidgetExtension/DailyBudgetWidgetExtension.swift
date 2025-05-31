@@ -78,6 +78,16 @@ struct SimpleEntry: TimelineEntry {
 struct DailyBudgetWidgetExtensionEntryView : View {
     var entry: Provider.Entry
     
+    // Deutscher NumberFormatter für Geldbeträge
+    private let currencyFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.locale = Locale(identifier: "de_DE")
+        formatter.currencySymbol = "€"
+        formatter.currencyCode = "EUR"
+        return formatter
+    }()
+    
     // Konvertiere den colorStatus in eine Color
     private func getColorForStatus(_ status: Int) -> Color {
         switch status {
@@ -94,9 +104,12 @@ struct DailyBudgetWidgetExtensionEntryView : View {
 
     var body: some View {
         VStack(spacing: 8) {
-            Text(String(format: "%.2f €", entry.dailyBudget))
+            Text(currencyFormatter.string(from: NSNumber(value: entry.dailyBudget)) ?? "0,00 €")
                 .font(.satoshi(size: 28, weight: .bold))
                 .foregroundColor(.white)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+                .fixedSize(horizontal: false, vertical: true)
             
             Text("Tagesbudget")
                 .font(.satoshi(size: 14, weight: .light))
@@ -123,6 +136,6 @@ struct DailyBudgetWidgetExtension: Widget {
 #Preview(as: .systemSmall) {
     DailyBudgetWidgetExtension()
 } timeline: {
-    SimpleEntry(date: .now, dailyBudget: 0.0, remainingDays: 0, colorStatus: 1)
-    SimpleEntry(date: .now, dailyBudget: 15.0, remainingDays: 0, colorStatus: 2)
+    SimpleEntry(date: .now, dailyBudget: 14.91, remainingDays: 0, colorStatus: 1)
+    SimpleEntry(date: .now, dailyBudget: 15.00, remainingDays: 0, colorStatus: 2)
 }

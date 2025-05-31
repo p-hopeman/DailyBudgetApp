@@ -17,6 +17,9 @@ class FontRegistration {
                 let success = CTFontManagerRegisterFontsForURL(fontURL as CFURL, .process, &error)
                 if success {
                     print("✅ Schriftart erfolgreich registriert: \(fontName).\(fontExtension)")
+                    
+                    // Überprüfe den tatsächlichen Namen der Schriftart
+                    checkActualFontName(fontPath: fontURL.path)
                 } else {
                     print("❌ Fehler beim Registrieren der Schriftart: \(fontName).\(fontExtension)")
                     if let error = error?.takeRetainedValue() {
@@ -38,6 +41,9 @@ class FontRegistration {
                         let success = CTFontManagerRegisterFontsForURL(fontURL as CFURL, .process, &error)
                         if success {
                             print("✅ Schriftart erfolgreich über alternativen Pfad registriert: \(fontName).\(fontExtension)")
+                            
+                            // Überprüfe den tatsächlichen Namen der Schriftart
+                            checkActualFontName(fontPath: fontPath)
                         } else {
                             print("❌ Fehler beim Registrieren der Schriftart über alternativen Pfad: \(fontName).\(fontExtension)")
                             if let error = error?.takeRetainedValue() {
@@ -58,6 +64,38 @@ class FontRegistration {
             for name in UIFont.fontNames(forFamilyName: family).sorted() {
                 print("   - \(name)")
             }
+        }
+    }
+    
+    // Funktion zum Überprüfen des tatsächlichen Namens einer Schriftart
+    static func checkActualFontName(fontPath: String) {
+        // Verwende direkt CGFont(withDataProvider:) statt CGDataProvider(filename:)
+        guard let url = URL(string: "file://" + fontPath) else {
+            print("❌ Konnte keine URL aus dem Pfad erstellen")
+            return
+        }
+        
+        do {
+            let fontData = try Data(contentsOf: url)
+            guard let dataProvider = CGDataProvider(data: fontData as CFData) else {
+                print("❌ Konnte Schriftart-Datenprovider nicht erstellen")
+                return
+            }
+            
+            guard let font = CGFont(dataProvider) else {
+                print("❌ Konnte CGFont nicht erstellen")
+                return
+            }
+            
+            if let fontName = font.postScriptName {
+                print("🔤 Tatsächlicher PostScript-Name der Schriftart: \(fontName)")
+            }
+            
+            if let fontFullName = font.fullName {
+                print("📝 Tatsächlicher vollständiger Name der Schriftart: \(fontFullName)")
+            }
+        } catch {
+            print("❌ Fehler beim Lesen der Schriftartdatei: \(error)")
         }
     }
 } 

@@ -20,6 +20,19 @@ struct ContentView: View {
     // Gemeinsame UserDefaults für App und Widget
     private let userDefaults = UserDefaults(suiteName: "group.com.dailybudget.app") ?? UserDefaults.standard
     
+    // Für die Überwachung des Monatswechsels
+    @State private var currentMonth = Calendar.current.component(.month, from: Date())
+    
+    // Deutscher NumberFormatter für Geldbeträge
+    private let currencyFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.locale = Locale(identifier: "de_DE")
+        formatter.currencySymbol = "€"
+        formatter.currencyCode = "EUR"
+        return formatter
+    }()
+    
     private func getRemainingDaysInMonth() -> Int {
         let calendar = Calendar.current
         let today = Date()
@@ -112,7 +125,7 @@ struct ContentView: View {
                     VStack {
                         // Hauptanzeige für Tagesbudget
                         VStack(spacing: 0) {
-                            Text(userDefaults.double(forKey: "dailyBudget"), format: .currency(code: "EUR"))
+                            Text(currencyFormatter.string(from: NSNumber(value: userDefaults.double(forKey: "dailyBudget"))) ?? "0,00 €")
                                 .font(.satoshi(size: 52, weight: .bold))
                                 .padding(.top, 30)
                                 .foregroundColor(.white)
@@ -139,7 +152,7 @@ struct ContentView: View {
                             
                             // Verbleibendes Budget
                             VStack {
-                                Text(userDefaults.double(forKey: "remainingBudget"), format: .currency(code: "EUR"))
+                                Text(currencyFormatter.string(from: NSNumber(value: userDefaults.double(forKey: "remainingBudget"))) ?? "0,00 €")
                                     .font(.satoshi(size: 36, weight: .bold))
                                     .foregroundColor(.white)
                                 
@@ -173,7 +186,7 @@ struct ContentView: View {
                                 Spacer()
                                 
                                 // Betrag
-                                Text(expense.amount, format: .currency(code: "EUR"))
+                                Text(currencyFormatter.string(from: NSNumber(value: expense.amount)) ?? "0,00 €")
                                     .font(.satoshi(size: 16, weight: .bold))
                                     .foregroundColor(.red)
                             }
@@ -194,7 +207,7 @@ struct ContentView: View {
                                 Spacer()
                                 
                                 // Betrag
-                                Text(deposit.amount, format: .currency(code: "EUR"))
+                                Text(currencyFormatter.string(from: NSNumber(value: deposit.amount)) ?? "0,00 €")
                                     .font(.satoshi(size: 16, weight: .bold))
                                     .foregroundColor(.green)
                             }
@@ -251,6 +264,20 @@ struct ContentView: View {
                 _ = getRemainingDaysInMonth()
                 // Berechne das Tagesbudget beim Start der App
                 _ = calculateDailyBudget()
+                // Aktualisiere die Transaktionen für den aktuellen Monat
+                budgetModel.refreshCurrentMonthTransactions()
+                
+                // Starte Timer für Monatswechsel-Überwachung
+                Timer.scheduledTimer(withTimeInterval: 3600, repeats: true) { _ in
+                    let newMonth = Calendar.current.component(.month, from: Date())
+                    if newMonth != currentMonth {
+                        currentMonth = newMonth
+                        // Neuer Monat erkannt - aktualisiere die Anzeige
+                        budgetModel.refreshCurrentMonthTransactions()
+                        _ = getRemainingDaysInMonth()
+                        _ = calculateDailyBudget()
+                    }
+                }
             }
             .sheet(isPresented: $showingAddTransaction) {
                 NavigationView {
@@ -265,7 +292,9 @@ struct ContentView: View {
                             showingAddTransaction = false
                         },
                         trailing: Button("Hinzufügen") {
-                            if let amount = Double(transactionAmount) {
+                            // Deutsche Komma-Eingaben unterstützen
+                            let cleanAmount = transactionAmount.replacingOccurrences(of: ",", with: ".")
+                            if let amount = Double(cleanAmount) {
                                 updateRemainingBudget(amount: amount)
                                 if isDeposit {
                                     budgetModel.addDeposit(amount: amount, description: transactionDescription)
