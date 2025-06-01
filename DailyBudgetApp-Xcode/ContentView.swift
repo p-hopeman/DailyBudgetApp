@@ -15,12 +15,10 @@ struct ContentView: View {
     @State private var showingAddTransaction = false
     @State private var transactionAmount = ""
     @State private var transactionDescription = ""
-    @State private var isDeposit = true  // true für Einzahlung, false für Auszahlung
-    @Environment(\.colorScheme) private var colorScheme  // Für Zugriff auf das System-Farbschema
-    // Gemeinsame UserDefaults für App und Widget
+    @State private var isDeposit = true
+    @Environment(\.colorScheme) private var colorScheme
     private let userDefaults = UserDefaults(suiteName: "group.com.dailybudget.app") ?? UserDefaults.standard
     
-    // Für die Überwachung des Monatswechsels
     @State private var currentMonth = Calendar.current.component(.month, from: Date())
     
     // Deutscher NumberFormatter für Geldbeträge
@@ -32,6 +30,9 @@ struct ContentView: View {
         formatter.currencyCode = "EUR"
         return formatter
     }()
+    
+    // Moderne Premium-Farben inspiriert von den Screenshots
+    private var premiumColors = PremiumColors()
     
     private func getRemainingDaysInMonth() -> Int {
         let calendar = Calendar.current
@@ -116,149 +117,193 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                // Hintergrundfarbe für die gesamte App
-                (colorScheme == .dark ? Color.black : Color.white)
-                    .edgesIgnoringSafeArea(.all)
+                // Premium Hintergrund mit subtilen Verläufen
+                LinearGradient(
+                    gradient: Gradient(colors: [
+                        Color(red: 0.98, green: 0.98, blue: 1.0),
+                        Color(red: 0.95, green: 0.96, blue: 0.99)
+                    ]),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .edgesIgnoringSafeArea(.all)
                 
-                VStack(spacing: 0) {
-                    // Oberer Bereich mit dynamischer Hintergrundfarbe
-                    VStack {
-                        // Hauptanzeige für Tagesbudget
-                        VStack(spacing: 0) {
+                ScrollView {
+                    VStack(spacing: 24) {
+                        // Hero Section mit verbesserter Lesbarkeit
+                        VStack(spacing: 20) {
+                            // Status Text
+                            Text("VERFÜGBAR")
+                                .font(.satoshi(size: 13, weight: .medium))
+                                .foregroundStyle(Color(red: 0.4, green: 0.4, blue: 0.4))
+                                .tracking(1.5)
+                                .padding(.top, 40)
+                            
+                            // Hauptbetrag - sehr groß und gut lesbar
                             Text(currencyFormatter.string(from: NSNumber(value: userDefaults.double(forKey: "dailyBudget"))) ?? "0,00 €")
-                                .font(.satoshi(size: 52, weight: .bold))
-                                .padding(.top, 30)
-                                .foregroundColor(.white)
+                                .font(.satoshi(size: 64, weight: .bold))
+                                .foregroundStyle(Color(red: 0.1, green: 0.1, blue: 0.1))
+                                .shadow(color: .black.opacity(0.05), radius: 2, x: 0, y: 1)
+                                .padding(.horizontal, 20)
+                                .multilineTextAlignment(.center)
                             
+                            // Subtitle
                             Text("Tagesbudget")
-                                .font(.satoshi(size: 24, weight: .light))
-                                .padding(.bottom, 20)
-                                .foregroundColor(.white)
+                                .font(.satoshi(size: 20, weight: .medium))
+                                .foregroundStyle(Color(red: 0.3, green: 0.3, blue: 0.3))
+                                .padding(.bottom, 10)
                         }
+                        .padding(.horizontal, 24)
                         
-                        // Untere Informationszeile
-                        HStack(spacing: 0) {
-                            // Verbleibende Tage
-                            VStack {
-                                Text("\(userDefaults.integer(forKey: "remainingDays"))")
-                                    .font(.satoshi(size: 36, weight: .bold))
-                                    .foregroundColor(.white)
-                                
-                                Text("verbleibende Tage")
-                                    .font(.satoshi(size: 14, weight: .light))
-                                    .foregroundColor(.white)
-                            }
-                            .frame(maxWidth: .infinity)
-                            
+                        // Quick Stats Row - vergrößert
+                        HStack(spacing: 16) {
                             // Verbleibendes Budget
-                            VStack {
-                                Text(currencyFormatter.string(from: NSNumber(value: userDefaults.double(forKey: "remainingBudget"))) ?? "0,00 €")
-                                    .font(.satoshi(size: 36, weight: .bold))
-                                    .foregroundColor(.white)
+                            VStack(spacing: 8) {
+                                Text("VERBLEIBENDES\nBUDGET")
+                                    .font(.satoshi(size: 11, weight: .semibold))
+                                    .foregroundStyle(Color(red: 0.4, green: 0.4, blue: 0.4))
+                                    .tracking(0.5)
+                                    .multilineTextAlignment(.center)
                                 
-                                Text("verbleibendes Budget")
-                                    .font(.satoshi(size: 14, weight: .light))
-                                    .foregroundColor(.white)
+                                Text(currencyFormatter.string(from: NSNumber(value: userDefaults.double(forKey: "remainingBudget"))) ?? "0,00 €")
+                                    .font(.satoshi(size: 20, weight: .bold))
+                                    .foregroundStyle(Color(red: 0.1, green: 0.1, blue: 0.1))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.8)
                             }
                             .frame(maxWidth: .infinity)
-                        }
-                        .padding(.horizontal)
-                        .padding(.bottom, 30)
-                    }
-                    .background(getColorForBudget(userDefaults.double(forKey: "dailyBudget")))
-                    
-                    Divider()
-                        .frame(height: 1)
-                        .background(Color.gray)
-                    
-                    // Expenses List
-                    List {
-                        ForEach(budgetModel.expenses) { expense in
-                            HStack {
-                                // Datum
-                                Text(formatDate(expense.date))
-                                    .font(.satoshi(size: 16, weight: .light))
+                            .padding(.vertical, 20)
+                            .padding(.horizontal, 12)
+                            .background(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(.white)
+                                    .shadow(color: .black.opacity(0.06), radius: 12, x: 0, y: 2)
+                            )
+                            
+                            // Übrige Tage / Monats-Fortschritt  
+                            VStack(spacing: 8) {
+                                Text("VERBLEIBENDE\nTAGE")
+                                    .font(.satoshi(size: 11, weight: .semibold))
+                                    .foregroundStyle(Color(red: 0.4, green: 0.4, blue: 0.4))
+                                    .tracking(0.5)
+                                    .multilineTextAlignment(.center)
                                 
-                                // Beschreibung
-                                Spacer()
-                                Text(expense.description)
-                                    .font(.satoshi(size: 16, weight: .light))
-                                Spacer()
-                                
-                                // Betrag
-                                Text(currencyFormatter.string(from: NSNumber(value: expense.amount)) ?? "0,00 €")
-                                    .font(.satoshi(size: 16, weight: .bold))
-                                    .foregroundColor(.red)
+                                Text("\(userDefaults.integer(forKey: "remainingDays"))")
+                                    .font(.satoshi(size: 20, weight: .bold))
+                                    .foregroundStyle(Color(red: 0.1, green: 0.1, blue: 0.1))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.8)
                             }
-                            .listRowBackground(colorScheme == .dark ? Color.black.opacity(0.8) : Color.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 20)
+                            .padding(.horizontal, 12)
+                            .background(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(.white)
+                                    .shadow(color: .black.opacity(0.06), radius: 12, x: 0, y: 2)
+                            )
+                        }
+                        .padding(.horizontal, 24)
+                        
+                        // Recent Transactions - nur anzeigen wenn vorhanden
+                        if !budgetModel.expenses.isEmpty || !budgetModel.deposits.isEmpty {
+                            VStack(alignment: .leading, spacing: 16) {
+                                HStack {
+                                    Text("LETZTE TRANSAKTIONEN")
+                                        .font(.satoshi(size: 13, weight: .semibold))
+                                        .foregroundStyle(Color(red: 0.4, green: 0.4, blue: 0.4))
+                                        .tracking(1.0)
+                                    Spacer()
+                                    Text("\(budgetModel.expenses.count + budgetModel.deposits.count)")
+                                        .font(.satoshi(size: 12, weight: .semibold))
+                                        .foregroundStyle(.white)
+                                        .padding(.horizontal, 10)
+                                        .padding(.vertical, 6)
+                                        .background(premiumColors.accent)
+                                        .cornerRadius(10)
+                                }
+                                .padding(.horizontal, 24)
+                                
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: 16) {
+                                        // Letzte 5 Transaktionen
+                                        ForEach(getRecentTransactions(), id: \.id) { transaction in
+                                            ImprovedTransactionCard(transaction: transaction, currencyFormatter: currencyFormatter)
+                                        }
+                                    }
+                                    .padding(.horizontal, 24)
+                                }
+                            }
                         }
                         
-                        // Einzahlungen anzeigen
-                        ForEach(budgetModel.deposits) { deposit in
-                            HStack {
-                                // Datum
-                                Text(formatDate(deposit.date))
-                                    .font(.satoshi(size: 16, weight: .light))
-                                
-                                // Beschreibung
-                                Spacer()
-                                Text(deposit.description)
-                                    .font(.satoshi(size: 16, weight: .light))
-                                Spacer()
-                                
-                                // Betrag
-                                Text(currencyFormatter.string(from: NSNumber(value: deposit.amount)) ?? "0,00 €")
-                                    .font(.satoshi(size: 16, weight: .bold))
-                                    .foregroundColor(.green)
-                            }
-                            .listRowBackground(colorScheme == .dark ? Color.black.opacity(0.8) : Color.white)
-                        }
+                        // Spacer für Floating Buttons
+                        Spacer(minLength: 120)
                     }
-                    .listStyle(PlainListStyle())
-                    
+                }
+                
+                // Floating Action Buttons - Position verbessert
+                VStack {
                     Spacer()
-                    
-                    // Buttons für Ein- und Auszahlungen
-                    HStack(spacing: 20) {
+                    HStack(spacing: 16) {
+                        // Einzahlung Button
                         Button(action: {
                             isDeposit = true
                             showingAddTransaction = true
                         }) {
-                            VStack {
-                                Image(systemName: "plus.circle.fill")
-                                    .font(.system(size: 32))
-                                    .foregroundColor(.black)
+                            HStack(spacing: 12) {
+                                Image(systemName: "plus")
+                                    .font(.system(size: 18, weight: .semibold))
                                 Text("Einzahlung")
-                                    .foregroundColor(.black)
+                                    .font(.satoshi(size: 16, weight: .semibold))
                             }
+                            .foregroundStyle(.white)
                             .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.green.opacity(0.8))
-                            .cornerRadius(10)
+                            .padding(.vertical, 18)
+                            .background(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .fill(
+                                        LinearGradient(
+                                            gradient: Gradient(colors: [premiumColors.success, premiumColors.successSecondary]),
+                                            startPoint: .leading,
+                                            endPoint: .trailing
+                                        )
+                                    )
+                                    .shadow(color: premiumColors.success.opacity(0.3), radius: 12, x: 0, y: 8)
+                            )
                         }
                         
+                        // Auszahlung Button
                         Button(action: {
                             isDeposit = false
                             showingAddTransaction = true
                         }) {
-                            VStack {
-                                Image(systemName: "minus.circle.fill")
-                                    .font(.system(size: 32))
-                                    .foregroundColor(.black)
+                            HStack(spacing: 12) {
+                                Image(systemName: "minus")
+                                    .font(.system(size: 18, weight: .semibold))
                                 Text("Auszahlung")
-                                    .foregroundColor(.black)
+                                    .font(.satoshi(size: 16, weight: .semibold))
                             }
+                            .foregroundStyle(.white)
                             .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.red.opacity(0.8))
-                            .cornerRadius(10)
+                            .padding(.vertical, 18)
+                            .background(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .fill(
+                                        LinearGradient(
+                                            gradient: Gradient(colors: [premiumColors.error, premiumColors.errorSecondary]),
+                                            startPoint: .leading,
+                                            endPoint: .trailing
+                                        )
+                                    )
+                                    .shadow(color: premiumColors.error.opacity(0.3), radius: 12, x: 0, y: 8)
+                            )
                         }
                     }
-                    .padding()
+                    .padding(.horizontal, 24)
+                    .padding(.bottom, 34)
                 }
             }
-            .navigationTitle("Tagesbudget")
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarHidden(true)
             .onAppear {
                 // Berechne die verbleibenden Tage beim Start der App
                 _ = getRemainingDaysInMonth()
@@ -280,34 +325,256 @@ struct ContentView: View {
                 }
             }
             .sheet(isPresented: $showingAddTransaction) {
-                NavigationView {
-                    Form {
-                        TextField("Betrag", text: $transactionAmount)
-                            .keyboardType(.decimalPad)
-                        TextField("Beschreibung", text: $transactionDescription)
-                    }
-                    .navigationTitle(isDeposit ? "Neue Einzahlung" : "Neue Auszahlung")
-                    .navigationBarItems(
-                        leading: Button("Abbrechen") {
-                            showingAddTransaction = false
-                        },
-                        trailing: Button("Hinzufügen") {
-                            // Deutsche Komma-Eingaben unterstützen
-                            let cleanAmount = transactionAmount.replacingOccurrences(of: ",", with: ".")
-                            if let amount = Double(cleanAmount) {
-                                updateRemainingBudget(amount: amount)
-                                if isDeposit {
-                                    budgetModel.addDeposit(amount: amount, description: transactionDescription)
-                                } else {
-                                    budgetModel.addExpense(amount: amount, description: transactionDescription)
-                                }
-                                transactionAmount = ""
-                                transactionDescription = ""
-                                showingAddTransaction = false
-                            }
+                PremiumTransactionSheet(
+                    isPresented: $showingAddTransaction,
+                    transactionAmount: $transactionAmount,
+                    transactionDescription: $transactionDescription,
+                    isDeposit: isDeposit,
+                    currencyFormatter: currencyFormatter,
+                    onAdd: { amount, description in
+                        updateRemainingBudget(amount: amount)
+                        if isDeposit {
+                            budgetModel.addDeposit(amount: amount, description: description)
+                        } else {
+                            budgetModel.addExpense(amount: amount, description: description)
                         }
-                    )
+                        transactionAmount = ""
+                        transactionDescription = ""
+                        showingAddTransaction = false
+                    }
+                )
+            }
+        }
+    }
+    
+    // Helper Functions
+    private func getBudgetProgress() -> Double {
+        let budget = userDefaults.double(forKey: "dailyBudget")
+        let maxBudget = 100.0 // Annahme: 100€ als "perfektes" Tagesbudget
+        return min(budget / maxBudget, 1.0)
+    }
+    
+    private func getTodayExpenses() -> Double {
+        let today = Calendar.current.startOfDay(for: Date())
+        return budgetModel.expenses
+            .filter { Calendar.current.isDate($0.date, inSameDayAs: today) }
+            .reduce(0) { $0 + $1.amount }
+    }
+    
+    private func getTodayDeposits() -> Double {
+        let today = Calendar.current.startOfDay(for: Date())
+        return budgetModel.deposits
+            .filter { Calendar.current.isDate($0.date, inSameDayAs: today) }
+            .reduce(0) { $0 + $1.amount }
+    }
+    
+    private func getRecentTransactions() -> [TransactionItem] {
+        var transactions: [TransactionItem] = []
+        
+        transactions.append(contentsOf: budgetModel.expenses.map { 
+            TransactionItem(id: $0.id, amount: $0.amount, description: $0.description, date: $0.date, isExpense: true)
+        })
+        
+        transactions.append(contentsOf: budgetModel.deposits.map { 
+            TransactionItem(id: $0.id, amount: $0.amount, description: $0.description, date: $0.date, isExpense: false)
+        })
+        
+        return transactions
+            .sorted { $0.date > $1.date }
+            .prefix(5)
+            .map { $0 }
+    }
+}
+
+// Premium Farb-System inspiriert von den Screenshots
+struct PremiumColors {
+    let accent = Color(red: 1.0, green: 0.45, blue: 0.85)        // Pink wie in Screenshot 3
+    let accentSecondary = Color(red: 0.9, green: 0.3, blue: 0.7)
+    
+    let success = Color(red: 0.0, green: 0.78, blue: 0.35)
+    let successSecondary = Color(red: 0.0, green: 0.68, blue: 0.38)
+    
+    let error = Color(red: 1.0, green: 0.31, blue: 0.31)         // Rot wie in Screenshot 2
+    let errorSecondary = Color(red: 0.9, green: 0.2, blue: 0.2)
+    
+    let warning = Color(red: 1.0, green: 0.76, blue: 0.03)
+    let warningSecondary = Color(red: 0.92, green: 0.65, blue: 0.05)
+}
+
+// Transaction Item für einheitliche Darstellung
+struct TransactionItem: Identifiable {
+    let id: UUID
+    let amount: Double
+    let description: String
+    let date: Date
+    let isExpense: Bool
+}
+
+// Verbesserte Transaction Card mit besserer Lesbarkeit
+struct ImprovedTransactionCard: View {
+    let transaction: TransactionItem
+    let currencyFormatter: NumberFormatter
+    
+    var body: some View {
+        VStack(spacing: 12) {
+            // Datum
+            Text(formatDate(transaction.date))
+                .font(.satoshi(size: 12, weight: .medium))
+                .foregroundStyle(Color(red: 0.5, green: 0.5, blue: 0.5))
+            
+            // Betrag
+            Text(currencyFormatter.string(from: NSNumber(value: transaction.amount)) ?? "0,00 €")
+                .font(.satoshi(size: 18, weight: .bold))
+                .foregroundStyle(transaction.isExpense ? Color(red: 0.9, green: 0.2, blue: 0.2) : Color(red: 0.0, green: 0.6, blue: 0.3))
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+            
+            // Beschreibung
+            Text(transaction.description)
+                .font(.satoshi(size: 11, weight: .medium))
+                .foregroundStyle(Color(red: 0.4, green: 0.4, blue: 0.4))
+                .lineLimit(2)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: 100)
+        }
+        .frame(width: 120)
+        .padding(.vertical, 16)
+        .padding(.horizontal, 12)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(.white)
+                .shadow(color: .black.opacity(0.06), radius: 8, x: 0, y: 2)
+        )
+    }
+    
+    private func formatDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d. MMM"
+        formatter.locale = Locale(identifier: "de_DE")
+        return formatter.string(from: date)
+    }
+}
+
+// Premium Transaction Sheet
+struct PremiumTransactionSheet: View {
+    @Binding var isPresented: Bool
+    @Binding var transactionAmount: String
+    @Binding var transactionDescription: String
+    let isDeposit: Bool
+    let currencyFormatter: NumberFormatter
+    let onAdd: (Double, String) -> Void
+    
+    var body: some View {
+        ZStack {
+            // Premium Hintergrund
+            LinearGradient(
+                gradient: Gradient(colors: [
+                    Color(red: 0.98, green: 0.98, blue: 1.0),
+                    Color(red: 0.95, green: 0.96, blue: 0.99)
+                ]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .edgesIgnoringSafeArea(.all)
+            
+            VStack(spacing: 32) {
+                // Header
+                VStack(spacing: 16) {
+                    // Close Button
+                    HStack {
+                        Button(action: { isPresented = false }) {
+                            Image(systemName: "xmark")
+                                .font(.system(size: 16, weight: .semibold))
+                                .foregroundStyle(Color(red: 0.4, green: 0.4, blue: 0.4))
+                                .padding(8)
+                                .background(Circle().fill(.white))
+                                .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+                        }
+                        Spacer()
+                    }
+                    
+                    // Icon und Titel
+                    VStack(spacing: 12) {
+                        ZStack {
+                            Circle()
+                                .fill(isDeposit ? Color.green.opacity(0.2) : Color.red.opacity(0.2))
+                                .frame(width: 80, height: 80)
+                            
+                            Image(systemName: isDeposit ? "plus" : "minus")
+                                .font(.system(size: 32, weight: .semibold))
+                                .foregroundStyle(isDeposit ? Color(red: 0.0, green: 0.6, blue: 0.3) : Color(red: 0.9, green: 0.2, blue: 0.2))
+                        }
+                        
+                        Text(isDeposit ? "Neue Einzahlung" : "Neue Auszahlung")
+                            .font(.satoshi(size: 24, weight: .bold))
+                            .foregroundStyle(Color(red: 0.1, green: 0.1, blue: 0.1))
+                    }
                 }
+                .padding(.horizontal, 24)
+                .padding(.top, 20)
+                
+                // Form
+                VStack(spacing: 24) {
+                    // Betrag Input
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Betrag")
+                            .font(.satoshi(size: 14, weight: .semibold))
+                            .foregroundStyle(Color(red: 0.4, green: 0.4, blue: 0.4))
+                        
+                        TextField("0,00", text: $transactionAmount)
+                            .font(.satoshi(size: 24, weight: .bold))
+                            .foregroundColor(Color(red: 0.1, green: 0.1, blue: 0.1))
+                            .keyboardType(.decimalPad)
+                            .padding(20)
+                            .background(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(.white)
+                                    .shadow(color: .black.opacity(0.04), radius: 8, x: 0, y: 2)
+                            )
+                    }
+                    
+                    // Beschreibung Input
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Beschreibung")
+                            .font(.satoshi(size: 14, weight: .semibold))
+                            .foregroundStyle(Color(red: 0.4, green: 0.4, blue: 0.4))
+                        
+                        TextField("Wofür war das?", text: $transactionDescription)
+                            .font(.satoshi(size: 18, weight: .medium))
+                            .foregroundColor(Color(red: 0.1, green: 0.1, blue: 0.1))
+                            .padding(20)
+                            .background(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(.white)
+                                    .shadow(color: .black.opacity(0.04), radius: 8, x: 0, y: 2)
+                            )
+                    }
+                }
+                .padding(.horizontal, 24)
+                
+                Spacer()
+                
+                // Action Button
+                Button(action: {
+                    let cleanAmount = transactionAmount.replacingOccurrences(of: ",", with: ".")
+                    if let amount = Double(cleanAmount), amount > 0 {
+                        onAdd(amount, transactionDescription)
+                    }
+                }) {
+                    Text("Hinzufügen")
+                        .font(.satoshi(size: 18, weight: .semibold))
+                        .foregroundStyle(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 20)
+                        .background(
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(isDeposit ? Color(red: 0.0, green: 0.6, blue: 0.3) : Color(red: 0.9, green: 0.2, blue: 0.2))
+                                .shadow(color: (isDeposit ? Color(red: 0.0, green: 0.6, blue: 0.3) : Color(red: 0.9, green: 0.2, blue: 0.2)).opacity(0.3), radius: 12, x: 0, y: 8)
+                        )
+                }
+                .disabled(transactionAmount.isEmpty || transactionDescription.isEmpty)
+                .padding(.horizontal, 24)
+                .padding(.bottom, 34)
             }
         }
     }
