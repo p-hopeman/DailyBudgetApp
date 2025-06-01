@@ -78,45 +78,72 @@ struct SimpleEntry: TimelineEntry {
 struct DailyBudgetWidgetExtensionEntryView : View {
     var entry: Provider.Entry
     
-    // Deutscher NumberFormatter für Geldbeträge
-    private let currencyFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.locale = Locale(identifier: "de_DE")
-        formatter.currencySymbol = "€"
-        formatter.currencyCode = "EUR"
-        return formatter
-    }()
-    
-    // Konvertiere den colorStatus in eine Color
-    private func getColorForStatus(_ status: Int) -> Color {
-        switch status {
-        case 0:
-            return .red
-        case 1:
-            return .yellow
-        case 2:
-            return .green
-        default:
-            return .yellow
+    // Hilfsfunktion für Gradient-Farben basierend auf Budget (identisch zur App)
+    private func getGradientColors(for budget: Double) -> [Color] {
+        if budget < 0 {
+            // Rot Gradient
+            return [
+                Color(red: 1.0, green: 0.3, blue: 0.3),     // Kräftiges Rot
+                Color(red: 0.8, green: 0.2, blue: 0.2),     // Dunkleres Rot für Widget
+                Color(red: 0.6, green: 0.1, blue: 0.1)      // Noch dunkler für Tiefe
+            ]
+        } else if budget < 10 {
+            // Gelb Gradient
+            return [
+                Color(red: 1.0, green: 0.8, blue: 0.1),     // Kräftiges Gelb
+                Color(red: 0.9, green: 0.7, blue: 0.0),     // Dunkleres Gelb
+                Color(red: 0.8, green: 0.6, blue: 0.0)      // Noch dunkler
+            ]
+        } else {
+            // Grün Gradient
+            return [
+                Color(red: 0.2, green: 0.8, blue: 0.4),     // Kräftiges Grün
+                Color(red: 0.1, green: 0.7, blue: 0.3),     // Dunkleres Grün
+                Color(red: 0.0, green: 0.6, blue: 0.2)      // Noch dunkler
+            ]
         }
+    }
+    
+    // Berechne den Monatsfortschritt in Prozent
+    private func getMonthProgress() -> Int {
+        let calendar = Calendar.current
+        let now = Date()
+        let range = calendar.range(of: .day, in: .month, for: now)!
+        let totalDays = range.count
+        let currentDay = calendar.component(.day, from: now)
+        let progressPercent = Int((Double(currentDay) / Double(totalDays)) * 100)
+        return min(progressPercent, 100)
     }
 
     var body: some View {
-        VStack(spacing: 8) {
-            Text(currencyFormatter.string(from: NSNumber(value: entry.dailyBudget)) ?? "0,00 €")
-                .font(.satoshi(size: 28, weight: .bold))
+        let gradientColors = getGradientColors(for: entry.dailyBudget)
+        
+        VStack(alignment: .leading, spacing: 8) {
+            // Riesige Hauptzahl mit € Symbol ganz oben
+            Text("\(String(format: "%.0f", entry.dailyBudget))€")
+                .font(.satoshi(size: 156, weight: .bold))
                 .foregroundColor(.white)
                 .lineLimit(1)
-                .minimumScaleFactor(0.7)
-                .fixedSize(horizontal: false, vertical: true)
+                .minimumScaleFactor(0.3)
+                .shadow(color: .black.opacity(0.15), radius: 3, x: 0, y: 2)
             
+            // "Tagesbudget" sehr klein damit es komplett reinpasst
             Text("Tagesbudget")
-                .font(.satoshi(size: 14, weight: .light))
-                .foregroundColor(.white)
+                .font(.satoshi(size: 12, weight: .medium))
+                .foregroundColor(.white.opacity(0.8))
+            
+            Spacer()
         }
-        .padding()
-        .containerBackground(getColorForStatus(entry.colorStatus), for: .widget)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .padding(20)
+        .containerBackground(for: .widget) {
+            // Dynamischer Hintergrund-Gradient wie in der App
+            LinearGradient(
+                gradient: Gradient(colors: gradientColors),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        }
     }
 }
 

@@ -98,6 +98,41 @@ struct ContentView: View {
         }
     }
     
+    // Hilfsfunktion für Gradient-Farben basierend auf Budget
+    private func getGradientColors(for budget: Double) -> [Color] {
+        if budget < 0 {
+            // Rot Gradient
+            return [
+                Color(red: 1.0, green: 0.3, blue: 0.3),     // Kräftiges Rot
+                Color(red: 1.0, green: 0.7, blue: 0.7),     // Helles Rosa
+                Color(red: 1.0, green: 0.85, blue: 0.85),   // Sehr helles Rosa
+                Color(red: 1.0, green: 0.95, blue: 0.95),   // Fast Weiß mit Hauch Rosa
+                Color.white,
+                Color.white
+            ]
+        } else if budget < 10 {
+            // Gelb Gradient
+            return [
+                Color(red: 1.0, green: 0.8, blue: 0.1),     // Kräftiges Gelb
+                Color(red: 1.0, green: 0.9, blue: 0.5),     // Helles Gelb
+                Color(red: 1.0, green: 0.95, blue: 0.8),    // Sehr helles Gelb
+                Color(red: 1.0, green: 0.98, blue: 0.9),    // Fast Weiß mit Hauch Gelb
+                Color.white,
+                Color.white
+            ]
+        } else {
+            // Grün Gradient
+            return [
+                Color(red: 0.2, green: 0.8, blue: 0.4),     // Kräftiges Grün
+                Color(red: 0.6, green: 0.9, blue: 0.7),     // Helles Grün
+                Color(red: 0.8, green: 0.95, blue: 0.85),   // Sehr helles Grün
+                Color(red: 0.9, green: 0.98, blue: 0.95),   // Fast Weiß mit Hauch Grün
+                Color.white,
+                Color.white
+            ]
+        }
+    }
+    
     // Hilfsfunktion zum Testen der Schriftarten
     private func testFontAvailability() -> [String] {
         let fontNames = ["Satoshi-Regular", "Satoshi-Medium", "Satoshi-Bold", "Satoshi-Light"]
@@ -117,14 +152,19 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                // Premium Hintergrund mit subtilen Verläufen
+                // Dynamischer Premium Hintergrund basierend auf dem Tagesbudget
+                let gradientColors = getGradientColors(for: userDefaults.double(forKey: "dailyBudget"))
                 LinearGradient(
-                    gradient: Gradient(colors: [
-                        Color(red: 0.98, green: 0.98, blue: 1.0),
-                        Color(red: 0.95, green: 0.96, blue: 0.99)
+                    gradient: Gradient(stops: [
+                        .init(color: gradientColors[0], location: 0.0),
+                        .init(color: gradientColors[1], location: 0.1),
+                        .init(color: gradientColors[2], location: 0.2),
+                        .init(color: gradientColors[3], location: 0.25),
+                        .init(color: gradientColors[4], location: 0.3),
+                        .init(color: gradientColors[5], location: 1.0)
                     ]),
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
+                    startPoint: .top,
+                    endPoint: .bottom
                 )
                 .edgesIgnoringSafeArea(.all)
                 
@@ -219,20 +259,18 @@ struct ContentView: View {
                                         .foregroundStyle(.white)
                                         .padding(.horizontal, 10)
                                         .padding(.vertical, 6)
-                                        .background(premiumColors.accent)
+                                        .background(Color(red: 0.5, green: 0.5, blue: 0.5))
                                         .cornerRadius(10)
                                 }
                                 .padding(.horizontal, 24)
                                 
-                                ScrollView(.horizontal, showsIndicators: false) {
-                                    HStack(spacing: 16) {
-                                        // Letzte 5 Transaktionen
-                                        ForEach(getRecentTransactions(), id: \.id) { transaction in
-                                            ImprovedTransactionCard(transaction: transaction, currencyFormatter: currencyFormatter)
-                                        }
+                                VStack(spacing: 12) {
+                                    // Letzte 5 Transaktionen vertikal
+                                    ForEach(getRecentTransactions(), id: \.id) { transaction in
+                                        ImprovedTransactionCard(transaction: transaction, currencyFormatter: currencyFormatter)
                                     }
-                                    .padding(.horizontal, 24)
                                 }
+                                .padding(.horizontal, 24)
                             }
                         }
                         
@@ -410,38 +448,36 @@ struct TransactionItem: Identifiable {
     let isExpense: Bool
 }
 
-// Verbesserte Transaction Card mit besserer Lesbarkeit
+// Verbesserte Transaction Card mit besserer Lesbarkeit - für vertikale Liste
 struct ImprovedTransactionCard: View {
     let transaction: TransactionItem
     let currencyFormatter: NumberFormatter
     
     var body: some View {
-        VStack(spacing: 12) {
+        HStack(spacing: 16) {
             // Datum
-            Text(formatDate(transaction.date))
-                .font(.satoshi(size: 12, weight: .medium))
-                .foregroundStyle(Color(red: 0.5, green: 0.5, blue: 0.5))
+            VStack(alignment: .leading, spacing: 4) {
+                Text(formatDate(transaction.date))
+                    .font(.satoshi(size: 12, weight: .medium))
+                    .foregroundStyle(Color(red: 0.5, green: 0.5, blue: 0.5))
+                
+                Text(transaction.description)
+                    .font(.satoshi(size: 14, weight: .medium))
+                    .foregroundStyle(Color(red: 0.2, green: 0.2, blue: 0.2))
+                    .lineLimit(2)
+            }
+            
+            Spacer()
             
             // Betrag
             Text(currencyFormatter.string(from: NSNumber(value: transaction.amount)) ?? "0,00 €")
-                .font(.satoshi(size: 18, weight: .bold))
+                .font(.satoshi(size: 16, weight: .bold))
                 .foregroundStyle(transaction.isExpense ? Color(red: 0.9, green: 0.2, blue: 0.2) : Color(red: 0.0, green: 0.6, blue: 0.3))
-                .lineLimit(1)
-                .minimumScaleFactor(0.8)
-            
-            // Beschreibung
-            Text(transaction.description)
-                .font(.satoshi(size: 11, weight: .medium))
-                .foregroundStyle(Color(red: 0.4, green: 0.4, blue: 0.4))
-                .lineLimit(2)
-                .multilineTextAlignment(.center)
-                .frame(maxWidth: 100)
         }
-        .frame(width: 120)
-        .padding(.vertical, 16)
-        .padding(.horizontal, 12)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
         .background(
-            RoundedRectangle(cornerRadius: 16)
+            RoundedRectangle(cornerRadius: 12)
                 .fill(.white)
                 .shadow(color: .black.opacity(0.06), radius: 8, x: 0, y: 2)
         )
